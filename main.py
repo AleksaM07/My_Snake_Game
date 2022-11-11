@@ -15,6 +15,7 @@ screen.setup(width=600, height=600)
 #screen.bgcolor("black")
 #adding my own bacground for visuly dividing the screen
 t.bgpic('slika.png')
+screen.title("Snake game")
 screen.tracer(0)
 score = 0
 
