@@ -8,14 +8,17 @@ GAME_SPEED = {
     "Normal": 0.08}
 
 screen = t.Screen()
+#Asking a user for the game mode they want, on hard mode snake will be faster
 game_mode = screen.textinput("Game mode", "Hard or Normal").title()
 
 screen.setup(width=600, height=600)
 #screen.bgcolor("black")
+#adding my own bacground for visuly dividing the screen
 t.bgpic('slika.png')
 screen.tracer(0)
 score = 0
 
+#zmijic = little snake in serbian
 zmijic = s.Snake()
 food = f.Food()
 scoreboard = Scoreboard(score)
@@ -29,7 +32,7 @@ screen.onkey(zmijic.right, "Right")
 game_is_in = True
 while game_is_in:
     screen.update()
-    # delay for 0.08 s and then refresh the screen
+    # delay for a sec and then refresh the screen
     time.sleep(GAME_SPEED[game_mode])
     zmijic.move_snake()
 
