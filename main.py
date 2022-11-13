@@ -1,5 +1,4 @@
-import turtle
-from turtle import Screen
+import turtle as t
 from snake import Snake
 from food import Food
 from scoreboard import Scoreboard
@@ -8,14 +7,27 @@ GAME_SPEED = {
     "Hard": 0.04,
     "Normal": 0.08}
 
-screen = Screen()
+
+screen = t.Screen()
+#Asking a user for the game mode they want, on hard mode snake will be faster
 game_mode = screen.textinput("Game mode", "Hard or Normal").title()
 
 screen.setup(width=600, height=600)
-turtle.bgpic('slika.png')
+t.bgpic('slika.png')
 screen.title("My Snake Game")
+
+screen.setup(width=600, height=600)
+#screen.bgcolor("black")
+#adding my own bacground for visuly dividing the screen
+t.bgpic('slika.png')
+screen.title("Snake game")
 screen.tracer(0)
 
+zmijic = Snake()
+food = Food()
+scoreboard = Scoreboard()
+
+#zmijic = little snake in serbian
 zmijic = Snake()
 food = Food()
 scoreboard = Scoreboard()
@@ -28,7 +40,7 @@ screen.onkey(zmijic.right, "Right")
 
 while True:
     screen.update()
-    # delay for 0.08 s and then refresh the screen
+    # delay for a sec and then refresh the screen
     time.sleep(GAME_SPEED[game_mode])
     zmijic.move()
 
