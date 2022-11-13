@@ -1,24 +1,24 @@
-import turtle as t
-import time
-import snake as s
-import food as f
+import turtle
+from turtle import Screen
+from snake import Snake
+from food import Food
 from scoreboard import Scoreboard
+import time
 GAME_SPEED = {
     "Hard": 0.04,
     "Normal": 0.08}
 
-screen = t.Screen()
+screen = Screen()
 game_mode = screen.textinput("Game mode", "Hard or Normal").title()
 
 screen.setup(width=600, height=600)
-#screen.bgcolor("black")
-t.bgpic('slika.png')
+turtle.bgpic('slika.png')
+screen.title("My Snake Game")
 screen.tracer(0)
-score = 0
 
-zmijic = s.Snake()
-food = f.Food()
-scoreboard = Scoreboard(score)
+zmijic = Snake()
+food = Food()
+scoreboard = Scoreboard()
 
 screen.listen()
 screen.onkey(zmijic.up, "Up")
@@ -26,29 +26,30 @@ screen.onkey(zmijic.down, "Down")
 screen.onkey(zmijic.left, "Left")
 screen.onkey(zmijic.right, "Right")
 
-game_is_in = True
-while game_is_in:
+while True:
     screen.update()
     # delay for 0.08 s and then refresh the screen
     time.sleep(GAME_SPEED[game_mode])
-    zmijic.move_snake()
+    zmijic.move()
 
-    #detect collision with food
-    if zmijic.head.distance(food) < 16:
-        food.refresh()
-        score += 1
-        zmijic.extend()
-        scoreboard.refresh(score)
+    #Detect collision with food.
+    for seg in zmijic.segments:
+        if seg.distance(food) < 16:
+            food.refresh()
+            zmijic.extend()
+            scoreboard.increase_score()
 
-    #detect collision with wall
+    #Detect collision with wall.
     if zmijic.head.xcor() > 280 or zmijic.head.xcor() < -280 or zmijic.head.ycor() > 237 or zmijic.head.ycor() < -280:
-        game_is_in = False
-        scoreboard.game_over()
+        scoreboard.reset()
+        zmijic.reset()
 
-    #detect collision with tail
-    for segment in zmijic.segments[1:]:
-        if zmijic.head.distance(segment) < 10:
-            game_is_on = False
-            scoreboard.game_over()
+    #Detect collision with tail.
+    for segment in zmijic.segments:
+        if segment == zmijic.head:
+            pass
+        elif zmijic.head.distance(segment) < 10:
+            scoreboard.reset()
+            zmijic.reset()
 
 screen.exitonclick()
